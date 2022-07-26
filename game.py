@@ -1,6 +1,6 @@
 import controller
 import pygame
-
+from pygame.sprite import Group
 
 from gun import Gun
 
@@ -16,10 +16,12 @@ def run():
     pygame.display.set_caption("Первая игра на питоне)")
     bg_color = (0, 0, 0)
     gun = Gun(screen)
+    bullets = Group()
     while True:
-        controller.events(gun)
+        controller.events(gun, screen, bullets)
         gun.update_coordinate()
-        controller.update(bg_color, screen, gun)
+        controller.update(bg_color, screen, gun, bullets)
+        controller.update_bullets(bullets)
 
 
 run()
