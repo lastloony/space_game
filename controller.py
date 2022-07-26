@@ -11,17 +11,20 @@ def events(gun, screen, bullets):
         if event.type == pygame.QUIT:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_d:
+            # вправо
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 gun.m_right = True
-            elif event.key == pygame.K_a:
+            # влево
+            elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.m_left = True
+            # стрельба
             elif event.key == pygame.K_SPACE:
                 new_bullet = Bullet(screen, gun)
                 bullets.add(new_bullet)
         elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_d:
+            if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 gun.m_right = False
-            elif event.key == pygame.K_a:
+            elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.m_left = False
 
 
