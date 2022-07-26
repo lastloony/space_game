@@ -17,11 +17,15 @@ def run():
     bg_color = (0, 0, 0)
     gun = Gun(screen)
     bullets = Group()
+    aliens = Group()
+    controller.create_army(screen, aliens)
+
     while True:
         controller.events(gun, screen, bullets)
         gun.update_coordinate()
-        controller.update(bg_color, screen, gun, bullets)
+        controller.update(bg_color, screen, gun, bullets, aliens)
         controller.update_bullets(bullets)
+        controller.update_aliens(aliens)
 
 
 run()
