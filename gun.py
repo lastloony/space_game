@@ -28,9 +28,12 @@ class Gun:
         """
 
         if self.m_right and self.rect.right < self.screen_rect.right:
-            self.center += 1.5
+            self.center += 0.5
         if self.m_left and self.rect.left > 0:
-            self.center -= 1.5
+            self.center -= 0.5
 
         self.rect.centerx = self.center
-        
+
+    def create_gun(self):
+        """Создаем новую пушку, после смерти"""
+        self.center = self.screen_rect.centerx

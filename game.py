@@ -3,6 +3,7 @@ import pygame
 from pygame.sprite import Group
 
 from gun import Gun
+from stats import Stats
 
 
 def run():
@@ -19,13 +20,14 @@ def run():
     bullets = Group()
     aliens = Group()
     controller.create_army(screen, aliens)
+    stats = Stats()
 
     while True:
         controller.events(gun, screen, bullets)
         gun.update_coordinate()
         controller.update(bg_color, screen, gun, bullets, aliens)
-        controller.update_bullets(bullets)
-        controller.update_aliens(aliens)
+        controller.update_bullets(bullets, aliens, screen)
+        controller.update_aliens(stats, screen, gun, aliens, bullets)
 
 
 run()

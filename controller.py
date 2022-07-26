@@ -1,5 +1,7 @@
 import pygame
 import sys
+import time
+
 from alien import Alien
 from bullet import Bullet
 
@@ -39,18 +41,43 @@ def update(bg_color, screen, gun, bullets, aliens):
     pygame.display.flip()
 
 
-def update_bullets(bullets):
+def update_bullets(bullets, aliens, screen):
     """Обновление позиции пули и удаление лишних пуль"""
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
+    pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if len(aliens) == 0:
+        bullets.empty()
+        create_army(screen, aliens)
 
 
-def update_aliens(aliens):
+def gun_kill(stats, screen, gun, aliens, bullets):
+    """Столконвение пушки и армии"""
+    stats.guns_left -= 1
+    aliens.empty()
+    bullets.empty()
+    gun.create_gun()
+    create_army(screen, aliens)
+    time.sleep(2)
+
+
+def update_aliens(stats, screen, gun, aliens, bullets):
     """Обновляет позицию пришельцев"""
     aliens.update()
+    if pygame.sprite.spritecollideany(gun, aliens):
+        gun_kill(stats, screen, gun, aliens, bullets)
+    aliens_check(stats, screen, gun, aliens, bullets)
 
+
+def aliens_check(stats, screen, gun, aliens, bullets):
+    """Проверка добралась ли армия до края экрана"""
+    screen_rect = screen.get_rect()
+    for alien in aliens.sprites():
+        if alien.rect.bottom >= screen_rect.bottom:
+            gun_kill(stats, screen, gun, aliens, bullets)
+            break
 
 def create_army(screen, aliens):
     """Создаем армию пришельцев"""
@@ -58,7 +85,10 @@ def create_army(screen, aliens):
     alien_width = alien.rect.width
     alien_count_x = int((700 - 2 * alien_width) / alien_width)
     alien_height = alien.rect.height
-    alien_count_y = int((800 - 100 - 2 * alien_height) / alien_height)
+    alien_count_y_max = int((800 - 100 - 2 * alien_height) / alien_height) - 1
+    alien_count_y = 5
+    if alien_count_y > alien_count_y_max:
+        alien_count_y = alien_count_y_max
 
     for row in range(alien_count_y):
         for alien_number in range(alien_count_x):
