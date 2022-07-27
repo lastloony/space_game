@@ -22,5 +22,5 @@ class Alien(pygame.sprite.Sprite):
 
     def update(self):
         """Перемещение пришельцев"""
-        self.y += 0.05
+        self.y += 0.03
         self.rect.y = self.y

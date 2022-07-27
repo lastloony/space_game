@@ -55,13 +55,16 @@ def update_bullets(bullets, aliens, screen):
 
 def gun_kill(stats, screen, gun, aliens, bullets):
     """Столконвение пушки и армии"""
-    stats.guns_left -= 1
-    aliens.empty()
-    bullets.empty()
-    gun.create_gun()
-    create_army(screen, aliens)
-    time.sleep(2)
-
+    if stats.guns_left > 0:
+        stats.guns_left -= 1
+        aliens.empty()
+        bullets.empty()
+        gun.create_gun()
+        create_army(screen, aliens)
+        time.sleep(2)
+    else:
+        stats.run_game = False
+        sys.exit()
 
 def update_aliens(stats, screen, gun, aliens, bullets):
     """Обновляет позицию пришельцев"""
@@ -78,6 +81,7 @@ def aliens_check(stats, screen, gun, aliens, bullets):
         if alien.rect.bottom >= screen_rect.bottom:
             gun_kill(stats, screen, gun, aliens, bullets)
             break
+
 
 def create_army(screen, aliens):
     """Создаем армию пришельцев"""

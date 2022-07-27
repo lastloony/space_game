@@ -24,10 +24,11 @@ def run():
 
     while True:
         controller.events(gun, screen, bullets)
-        gun.update_coordinate()
-        controller.update(bg_color, screen, gun, bullets, aliens)
-        controller.update_bullets(bullets, aliens, screen)
-        controller.update_aliens(stats, screen, gun, aliens, bullets)
+        if stats.run_game:
+            gun.update_coordinate()
+            controller.update(bg_color, screen, gun, bullets, aliens)
+            controller.update_bullets(bullets, aliens, screen)
+            controller.update_aliens(stats, screen, gun, aliens, bullets)
 
 
 run()
