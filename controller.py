@@ -31,9 +31,10 @@ def events(gun, screen, bullets):
                 gun.m_left = False
 
 
-def update(bg_color, screen, gun, bullets, aliens):
+def update(bg_color, screen, gun, bullets, aliens, stats, score):
     """Обновление экрана"""
     screen.fill(bg_color)
+    score.show_score()
     for bullet in bullets.sprites():
         bullet.draw_bullet()
     gun.output()
@@ -41,13 +42,17 @@ def update(bg_color, screen, gun, bullets, aliens):
     pygame.display.flip()
 
 
-def update_bullets(bullets, aliens, screen):
+def update_bullets(bullets, aliens, screen, stats, score):
     """Обновление позиции пули и удаление лишних пуль"""
     bullets.update()
     for bullet in bullets.copy():
         if bullet.rect.bottom <= 0:
             bullets.remove(bullet)
-    pygame.sprite.groupcollide(bullets, aliens, True, True)
+    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
+    if collisions:
+        for aliens in collisions.values():
+            stats.score += 10 * len(aliens)
+        score.image_score()
     if len(aliens) == 0:
         bullets.empty()
         create_army(screen, aliens)
@@ -65,6 +70,7 @@ def gun_kill(stats, screen, gun, aliens, bullets):
     else:
         stats.run_game = False
         sys.exit()
+
 
 def update_aliens(stats, screen, gun, aliens, bullets):
     """Обновляет позицию пришельцев"""
