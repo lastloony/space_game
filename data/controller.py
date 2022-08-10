@@ -2,8 +2,9 @@ import pygame
 import sys
 import time
 
-from alien import Alien
-from bullet import Bullet
+from data.alien import Alien
+from data.bullet import Bullet
+from settings_game import Settings
 
 
 def events(gun, screen, bullets):
@@ -99,7 +100,7 @@ def create_army(screen, aliens):
     alien_count_x = int((700 - 2 * alien_width) / alien_width)
     alien_height = alien.rect.height
     alien_count_y_max = int((800 - 100 - 2 * alien_height) / alien_height) - 1
-    alien_count_y = 10  # количество рядов пришельцев
+    alien_count_y = Settings.row_alien  # количество рядов пришельцев
     if alien_count_y > alien_count_y_max:
         alien_count_y = alien_count_y_max
 
@@ -118,5 +119,5 @@ def check_height_score(stats, score):
     if stats.score > stats.height_score:
         stats.height_score = stats.score
         score.image_height_score()
-        with open("score.txt", "w") as f:
+        with open("data/score.txt", "w") as f:
             f.write(str(stats.height_score))
