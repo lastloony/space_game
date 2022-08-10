@@ -99,7 +99,7 @@ def create_army(screen, aliens):
     alien_count_x = int((700 - 2 * alien_width) / alien_width)
     alien_height = alien.rect.height
     alien_count_y_max = int((800 - 100 - 2 * alien_height) / alien_height) - 1
-    alien_count_y = 5
+    alien_count_y = 10  # количество рядов пришельцев
     if alien_count_y > alien_count_y_max:
         alien_count_y = alien_count_y_max
 
