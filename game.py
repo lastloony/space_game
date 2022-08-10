@@ -7,7 +7,7 @@ from data.scores import Scores
 from data.stats import Stats
 
 
-def run():
+def run(running):
     """
     run game
     :return:
@@ -24,7 +24,7 @@ def run():
     stats = Stats()
     score = Scores(screen, stats)
 
-    while True:
+    while running:
         controller.events(gun, screen, bullets)
         if stats.run_game:
             gun.update_coordinate()
@@ -33,4 +33,5 @@ def run():
             controller.update_aliens(stats, screen, gun, aliens, bullets, score)
 
 
-run()
+running = True
+run(running)
