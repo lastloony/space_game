@@ -1,10 +1,10 @@
-import controller
+from data import controller
 import pygame
 from pygame.sprite import Group
 
-from gun import Gun
-from scores import Scores
-from stats import Stats
+from data.gun import Gun
+from data.scores import Scores
+from data.stats import Stats
 
 
 def run():
