@@ -30,7 +30,7 @@ def run():
             gun.update_coordinate()
             controller.update(bg_color, screen, gun, bullets, aliens, stats, score)
             controller.update_bullets(bullets, aliens, screen, stats, score)
-            controller.update_aliens(stats, screen, gun, aliens, bullets)
+            controller.update_aliens(stats, screen, gun, aliens, bullets, score)
 
 
 run()

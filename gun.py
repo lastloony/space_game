@@ -1,12 +1,13 @@
 import pygame
+from pygame.sprite import Sprite
 
 
-class Gun:
+class Gun(Sprite):
 
     def __init__(self, screen):
-        print("Пушка создана")
         """Инициализаця пушки"""
 
+        super(Gun, self).__init__()
         self.screen = screen
         self.image = pygame.image.load("assets/gun.png")
         self.rect = self.image.get_rect()

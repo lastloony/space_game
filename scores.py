@@ -1,4 +1,6 @@
 import pygame
+from pygame.sprite import Group
+from gun import Gun
 
 
 class Scores:
@@ -6,6 +8,7 @@ class Scores:
 
     def __init__(self, screen, stats):
         """Инициализируем подсчет очков"""
+        self.lives = None
         self.score_rect = None
         self.score_img = None
         self.height_score_rect = None
@@ -17,6 +20,7 @@ class Scores:
         self.font = pygame.font.SysFont(None, 36)
         self.image_score()
         self.image_height_score()
+        self.image_guns()
     
     def image_score(self):
         """Преобразовывает текст счета в графическое изображение"""
@@ -32,7 +36,17 @@ class Scores:
         self.height_score_rect.centerx = self.screen_rect.centerx
         self.height_score_rect.top = 20
 
+    def image_guns(self):
+        """Количество жизней"""
+        self.lives = Group()
+        for live_number in range(self.stats.guns_left):
+            live = Gun(self.screen)
+            live.rect.x = 15 + live_number * live.rect.width
+            live.rect.y = 20
+            self.lives.add(live)
+
     def show_score(self):
         """Вывод счета на экран"""
         self.screen.blit(self.score_img, self.score_rect)
         self.screen.blit(self.height_score_img, self.height_score_rect)
+        self.lives.draw(self.screen)

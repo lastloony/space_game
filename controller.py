@@ -54,15 +54,17 @@ def update_bullets(bullets, aliens, screen, stats, score):
             stats.score += 10 * len(aliens)
         score.image_score()
         check_height_score(stats, score)
+        score.image_guns()
     if len(aliens) == 0:
         bullets.empty()
         create_army(screen, aliens)
 
 
-def gun_kill(stats, screen, gun, aliens, bullets):
+def gun_kill(stats, screen, gun, aliens, bullets, score):
     """Столконвение пушки и армии"""
     if stats.guns_left > 0:
         stats.guns_left -= 1
+        score.image_guns()
         aliens.empty()
         bullets.empty()
         gun.create_gun()
@@ -73,20 +75,20 @@ def gun_kill(stats, screen, gun, aliens, bullets):
         sys.exit()
 
 
-def update_aliens(stats, screen, gun, aliens, bullets):
+def update_aliens(stats, screen, gun, aliens, bullets, score):
     """Обновляет позицию пришельцев"""
     aliens.update()
     if pygame.sprite.spritecollideany(gun, aliens):
-        gun_kill(stats, screen, gun, aliens, bullets)
-    aliens_check(stats, screen, gun, aliens, bullets)
+        gun_kill(stats, screen, gun, aliens, bullets, score)
+    aliens_check(stats, screen, gun, aliens, bullets, score)
 
 
-def aliens_check(stats, screen, gun, aliens, bullets):
+def aliens_check(stats, screen, gun, aliens, bullets, score):
     """Проверка добралась ли армия до края экрана"""
     screen_rect = screen.get_rect()
     for alien in aliens.sprites():
         if alien.rect.bottom >= screen_rect.bottom:
-            gun_kill(stats, screen, gun, aliens, bullets)
+            gun_kill(stats, screen, gun, aliens, bullets, score)
             break
 
 
