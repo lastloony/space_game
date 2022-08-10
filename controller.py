@@ -53,6 +53,7 @@ def update_bullets(bullets, aliens, screen, stats, score):
         for aliens in collisions.values():
             stats.score += 10 * len(aliens)
         score.image_score()
+        check_height_score(stats, score)
     if len(aliens) == 0:
         bullets.empty()
         create_army(screen, aliens)
@@ -108,3 +109,12 @@ def create_army(screen, aliens):
             alien.rect.x = alien.x
             alien.rect.y = alien.rect.height + alien.rect.height * row
             aliens.add(alien)
+
+
+def check_height_score(stats, score):
+    """Проверка нового рекорда"""
+    if stats.score > stats.height_score:
+        stats.height_score = stats.score
+        score.image_height_score()
+        with open("score.txt", "w") as f:
+            f.write(str(stats.height_score))

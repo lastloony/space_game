@@ -4,7 +4,7 @@ import pygame
 class Gun:
 
     def __init__(self, screen):
-        print("helo")
+        print("Пушка создана")
         """Инициализаця пушки"""
 
         self.screen = screen
