@@ -56,6 +56,8 @@ def run(launched):
 
 
 init()
+mixer.music.load("data/assets/music/joshua-mclean-mountain-trials.mp3")
+mixer.music.play(-1)
 menu = Menu()
 menu.append_option("Start Game", lambda: print("Start Game"))
 # menu.append_option("Exit", quit)
