@@ -13,13 +13,8 @@ def run(launched):
     """
     run game
     """
-
-    def quit_game():
-        global launched
-        launched = False
-
     screen = pygame.display.set_mode((700, 800))
-    pygame.display.set_caption("Первая игра на питоне) Леха, привет!")
+    pygame.display.set_caption("Первая игра на питоне)")
     bg_color = (0, 0, 0)
     gun = Gun(screen)
     bullets = Group()
@@ -39,6 +34,28 @@ def run(launched):
         for event in pygame.event.get():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 end_it = True
+            if event.type == pygame.QUIT:
+                quit()
+        pygame.display.flip()
+
+    leha_hi = True
+    while leha_hi:
+        screen.fill(bg_color)
+        myfont = pygame.font.SysFont("Britannic Bold", 40)
+        nlabel = myfont.render("Леха привет!", True, (0, 255, 0))
+        nlabel_rect = nlabel.get_rect()
+        nlabel_rect.centerx = 350
+        nlabel_rect.top = 100
+        screen.blit(nlabel, nlabel_rect)
+        image = pygame.image.load("data/assets/img.png")
+        rect = image.get_rect()
+        rect.centerx = 350
+        rect.bottom = 500
+        screen.blit(image, rect)
+
+        for event in pygame.event.get():
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                leha_hi = False
             if event.type == pygame.QUIT:
                 quit()
         pygame.display.flip()
