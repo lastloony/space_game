@@ -18,7 +18,6 @@ class Alien(pygame.sprite.Sprite):
 
     def draw(self):
         """Вывод пришельца на экран"""
-
         self.screen.blit(self.image, self.rect)
 
     def update(self):

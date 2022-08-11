@@ -29,9 +29,9 @@ class Gun(Sprite):
         """
 
         if self.m_right and self.rect.right < self.screen_rect.right:
-            self.center += 0.5
+            self.center += 0.7
         if self.m_left and self.rect.left > 0:
-            self.center -= 0.5
+            self.center -= 0.7
 
         self.rect.centerx = self.center
 
