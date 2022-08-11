@@ -70,7 +70,7 @@ def gun_kill(stats, screen, gun, aliens, bullets, score):
         aliens.empty()
         bullets.empty()
         gun.create_gun()
-        create_army(screen, aliens)
+        create_army(screen, aliens, Settings.level)
         time.sleep(2)
     else:
         stats.run_game = False
