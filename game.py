@@ -8,12 +8,12 @@ from data.gun import Gun
 from data.menu import Menu
 from data.scores import Scores
 from data.stats import Stats
+from settings_game import Settings
 
 
 def run(launched):
     """
     run game
-    :return:
     """
 
     def quit_game():
@@ -26,7 +26,7 @@ def run(launched):
     gun = Gun(screen)
     bullets = Group()
     aliens = Group()
-    controller.create_army(screen, aliens)
+    controller.create_army(screen, aliens, Settings.level)
     stats = Stats()
     score = Scores(screen, stats)
 

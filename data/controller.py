@@ -58,7 +58,8 @@ def update_bullets(bullets, aliens, screen, stats, score):
         score.image_guns()
     if len(aliens) == 0:
         bullets.empty()
-        create_army(screen, aliens)
+        Settings.level += 1
+        create_army(screen, aliens, Settings.level)
 
 
 def gun_kill(stats, screen, gun, aliens, bullets, score):
@@ -93,14 +94,14 @@ def aliens_check(stats, screen, gun, aliens, bullets, score):
             break
 
 
-def create_army(screen, aliens):
+def create_army(screen, aliens, level):
     """Создаем армию пришельцев"""
     alien = Alien(screen)
     alien_width = alien.rect.width
     alien_count_x = int((700 - 2 * alien_width) / alien_width)
     alien_height = alien.rect.height
     alien_count_y_max = int((800 - 100 - 2 * alien_height) / alien_height) - 1
-    alien_count_y = Settings.row_alien  # количество рядов пришельцев
+    alien_count_y = Settings.row_alien + level  # количество рядов пришельцев
     if alien_count_y > alien_count_y_max:
         alien_count_y = alien_count_y_max
 
