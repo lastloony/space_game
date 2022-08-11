@@ -1,6 +1,5 @@
 import pygame
 import sys
-import time
 
 from data.alien import Alien
 from data.bullet import Bullet
@@ -71,8 +70,22 @@ def gun_kill(stats, screen, gun, aliens, bullets, score):
         bullets.empty()
         gun.create_gun()
         create_army(screen, aliens, Settings.level)
-        time.sleep(2)
+        pygame.time.delay(200)
     else:
+        end_it = False
+        while not end_it:
+            myfont = pygame.font.SysFont("Britannic Bold", 40)
+            nlabel = myfont.render("Game Over", True, (0, 255, 0))
+            nlabel_rect = nlabel.get_rect()
+            nlabel_rect.centerx = 350
+            nlabel_rect.top = 200
+            screen.blit(nlabel, nlabel_rect)
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    end_it = True
+                if event.type == pygame.QUIT:
+                    quit()
+            pygame.display.flip()
         stats.run_game = False
         sys.exit()
 
