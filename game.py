@@ -3,13 +3,14 @@ import pygame
 from data import controller
 from pygame.sprite import Group
 
+from data.bullet import Bullet
 from data.gun import Gun
 from data.scores import Scores
 from data.stats import Stats
 from settings_game import Settings
 
 
-def run(launched):
+def run(launched, clock):
     """
     run game
     """
@@ -59,19 +60,27 @@ def run(launched):
             if event.type == pygame.QUIT:
                 quit()
         pygame.display.flip()
-
+    dt = 0
     while launched:
-        controller.events(gun, screen, bullets)
+        controller.events(gun)
         if stats.run_game:
             gun.update_coordinate()
             controller.update(bg_color, screen, gun, bullets, aliens, stats, score)
             controller.update_bullets(bullets, aliens, screen, stats, score)
             controller.update_aliens(stats, screen, gun, aliens, bullets, score)
+            dt += 1
+            if gun.fire and dt > 10:
+                new_bullet = Bullet(screen, gun)
+                bullets.add(new_bullet)
+                dt = 0
+
+        clock.tick(60)
 
 
 pygame.init()
 pygame.mixer.music.load("data/assets/music/joshua-mclean-mountain-trials.mp3")
 pygame.mixer.music.play(-1)
+clock = pygame.time.Clock()
 
 launched = True
-run(launched)
+run(launched, clock)

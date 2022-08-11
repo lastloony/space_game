@@ -17,6 +17,7 @@ class Gun(Sprite):
         self.rect.bottom = self.screen_rect.bottom
         self.m_right = False
         self.m_left = False
+        self.fire = False
 
     def output(self):
         """Отрисовка пушки"""
@@ -29,9 +30,9 @@ class Gun(Sprite):
         """
 
         if self.m_right and self.rect.right < self.screen_rect.right:
-            self.center += 0.7
+            self.center += 2.7
         if self.m_left and self.rect.left > 0:
-            self.center -= 0.7
+            self.center -= 2.7
 
         self.rect.centerx = self.center
 

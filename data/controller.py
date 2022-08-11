@@ -2,11 +2,10 @@ import pygame
 import sys
 
 from data.alien import Alien
-from data.bullet import Bullet
 from settings_game import Settings
 
 
-def events(gun, screen, bullets):
+def events(gun):
     """
     Обработка событий
     """
@@ -21,14 +20,15 @@ def events(gun, screen, bullets):
             elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.m_left = True
             # стрельба
-            elif event.key == pygame.K_SPACE:
-                new_bullet = Bullet(screen, gun)
-                bullets.add(new_bullet)
+            if event.key == pygame.K_SPACE:
+                gun.fire = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 gun.m_right = False
             elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.m_left = False
+            if event.key == pygame.K_SPACE:
+                gun.fire = False
 
 
 def update(bg_color, screen, gun, bullets, aliens, stats, score):
@@ -114,6 +114,8 @@ def create_army(screen, aliens, level):
     alien_count_x = int((700 - 2 * alien_width) / alien_width)
     alien_height = alien.rect.height
     alien_count_y_max = int((800 - 100 - 2 * alien_height) / alien_height) - 1
+    if level > 5:
+        level = 5
     alien_count_y = Settings.row_alien + level  # количество рядов пришельцев
     if alien_count_y > alien_count_y_max:
         alien_count_y = alien_count_y_max
