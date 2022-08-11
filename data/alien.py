@@ -1,4 +1,5 @@
 import pygame
+from settings_game import Settings
 
 
 class Alien(pygame.sprite.Sprite):
@@ -8,7 +9,7 @@ class Alien(pygame.sprite.Sprite):
         """Иницилизация и начальная позиция"""
         super(Alien, self).__init__()
         self.screen = screen
-        self.image = pygame.image.load("assets/alien.png")
+        self.image = pygame.image.load("data/assets/alien.png")
         self.rect = self.image.get_rect()
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
@@ -17,10 +18,9 @@ class Alien(pygame.sprite.Sprite):
 
     def draw(self):
         """Вывод пришельца на экран"""
-
         self.screen.blit(self.image, self.rect)
 
     def update(self):
         """Перемещение пришельцев"""
-        self.y += 0.03
+        self.y += Settings.alien_speed
         self.rect.y = self.y
