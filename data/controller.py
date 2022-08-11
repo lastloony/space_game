@@ -1,12 +1,11 @@
 import pygame
 import sys
-import time
 
-from alien import Alien
-from bullet import Bullet
+from data.alien import Alien
+from settings_game import Settings
 
 
-def events(gun, screen, bullets):
+def events(gun):
     """
     Обработка событий
     """
@@ -21,14 +20,15 @@ def events(gun, screen, bullets):
             elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.m_left = True
             # стрельба
-            elif event.key == pygame.K_SPACE:
-                new_bullet = Bullet(screen, gun)
-                bullets.add(new_bullet)
+            if event.key == pygame.K_SPACE:
+                gun.fire = True
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_d or event.key == pygame.K_RIGHT:
                 gun.m_right = False
             elif event.key == pygame.K_a or event.key == pygame.K_LEFT:
                 gun.m_left = False
+            if event.key == pygame.K_SPACE:
+                gun.fire = False
 
 
 def update(bg_color, screen, gun, bullets, aliens, stats, score):
@@ -57,7 +57,8 @@ def update_bullets(bullets, aliens, screen, stats, score):
         score.image_guns()
     if len(aliens) == 0:
         bullets.empty()
-        create_army(screen, aliens)
+        Settings.level += 1
+        create_army(screen, aliens, Settings.level)
 
 
 def gun_kill(stats, screen, gun, aliens, bullets, score):
@@ -68,9 +69,23 @@ def gun_kill(stats, screen, gun, aliens, bullets, score):
         aliens.empty()
         bullets.empty()
         gun.create_gun()
-        create_army(screen, aliens)
-        time.sleep(2)
+        create_army(screen, aliens, Settings.level)
+        pygame.time.delay(200)
     else:
+        end_it = False
+        while not end_it:
+            myfont = pygame.font.SysFont("Britannic Bold", 40)
+            nlabel = myfont.render("Game Over", True, (0, 255, 0))
+            nlabel_rect = nlabel.get_rect()
+            nlabel_rect.centerx = 350
+            nlabel_rect.top = 200
+            screen.blit(nlabel, nlabel_rect)
+            for event in pygame.event.get():
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    end_it = True
+                if event.type == pygame.QUIT:
+                    quit()
+            pygame.display.flip()
         stats.run_game = False
         sys.exit()
 
@@ -92,14 +107,16 @@ def aliens_check(stats, screen, gun, aliens, bullets, score):
             break
 
 
-def create_army(screen, aliens):
+def create_army(screen, aliens, level):
     """Создаем армию пришельцев"""
     alien = Alien(screen)
     alien_width = alien.rect.width
     alien_count_x = int((700 - 2 * alien_width) / alien_width)
     alien_height = alien.rect.height
     alien_count_y_max = int((800 - 100 - 2 * alien_height) / alien_height) - 1
-    alien_count_y = 10  # количество рядов пришельцев
+    if level > 5:
+        level = 5
+    alien_count_y = Settings.row_alien + level  # количество рядов пришельцев
     if alien_count_y > alien_count_y_max:
         alien_count_y = alien_count_y_max
 
@@ -118,5 +135,5 @@ def check_height_score(stats, score):
     if stats.score > stats.height_score:
         stats.height_score = stats.score
         score.image_height_score()
-        with open("score.txt", "w") as f:
+        with open("data/score.txt", "w") as f:
             f.write(str(stats.height_score))

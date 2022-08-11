@@ -1,6 +1,6 @@
 import pygame
 from pygame.sprite import Group
-from gun import Gun
+from data.gun import Gun
 
 
 class Scores:
