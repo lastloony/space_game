@@ -15,7 +15,7 @@ def run(launched, clock):
     run game
     """
     screen = pygame.display.set_mode((700, 800))
-    pygame.display.set_caption("Первая игра на питоне)")
+    pygame.display.set_caption("Первая игра на питоне")
     bg_color = (0, 0, 0)
     gun = Gun(screen)
     bullets = Group()
